@@ -47,7 +47,7 @@ class Client:
         # Create Setup button
         self.setup = Button(self.master, width=40, padx=3, pady=3, activebackground = 'red', activeforeground = 'white'
                             , bg = 'yellow')
-        self.setup["text"] = Setup"
+        self.setup["text"] = "Setup"
         self.setup["command"] = self.setupMovie
         self.setup.grid(row=0, column=0, padx=2, pady=2)
 
