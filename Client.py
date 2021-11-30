@@ -44,28 +44,28 @@ class Client:
         # Create Setup button
         self.setup = Button(self.master, width=40, padx=3, pady=3, activebackground = 'red', activeforeground = 'white'
                             , bg = 'yellow')
-        self.setup["text"] = "🎦 Setup"
+        self.setup["text"] = "Setup"
         self.setup["command"] = self.setupMovie
         self.setup.grid(row=0, column=0, padx=2, pady=2)
 
         # Create Play button
         self.start = Button(self.master, width=40, padx=3, pady=3, activebackground = 'red', activeforeground = 'white'
                             , bg = 'green')
-        self.start["text"] = "▶️Play"
+        self.start["text"] = "Play"
         self.start["command"] = self.playMovie
         self.start.grid(row=0, column=1, padx=2, pady=2)
 
         # Create Pause button
         self.pause = Button(self.master, width=40, padx=3, pady=3, activebackground = 'red', activeforeground = 'white'
                             , bg = 'red')
-        self.pause["text"] = "⏸️Pause"
+        self.pause["text"] = "Pause"
         self.pause["command"] = self.pauseMovie
         self.pause.grid(row=0, column=2, padx=2, pady=2)
 
         # Create Teardown button
         self.teardown = Button(self.master, width=40, padx=3, pady=3, activebackground = 'red', activeforeground = 'white'
                             , bg = 'black', fg = 'white')
-        self.teardown["text"] = "⏹️Teardown"
+        self.teardown["text"] = "Teardown"
         self.teardown["command"] = self.exitClient
         self.teardown.grid(row=0, column=3, padx=2, pady=2)
 
