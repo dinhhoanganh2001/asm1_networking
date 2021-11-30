@@ -20,7 +20,6 @@ class Client:
     PAUSE = 2
     TEARDOWN = 3
     DESCRIBE = 4
-
     # Initiation..
     def __init__(self, master, serveraddr, serverport, rtpport, filename):
         self.master = master
@@ -80,6 +79,12 @@ class Client:
         # Create a label to display the movie
         self.label = Label(self.master, height=19)
         self.label.grid(row=1, column=0, columnspan=4, sticky=W + E + N + S, padx=5, pady=5)
+
+        self.label2 = Label(self.master, height =19)
+        self.label2.grid(row=1, column=3, columnspan=4, sticky=W + E + N + S, padx=5, pady=5)
+
+
+
 
     def describeMovie(self):
         """Describe button handler."""
@@ -243,6 +248,7 @@ class Client:
         """Parse the RTSP reply from the server."""
         if self.info:
             self.info = False
+            self.label2.config(text = "Movie Info: \n" + data)
             print("\nData received:\n" + data)
         lines = data.split('\n')
         seqNum = int(lines[1].split(' ')[1])
