@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter.messagebox as tkM
 from PIL import Image, ImageTk
 import socket, threading, sys, traceback, os
+from time import time
 
 from RtpPacket import RtpPacket
 
@@ -23,6 +24,8 @@ class Client:
     beginTimestamp = 0
     endTimestamp = 0
     videoSize = 0
+    pauseTime = 0
+    beginPauseTime = 0
     # Initiation..
     def __init__(self, master, serveraddr, serverport, rtpport, filename):
         self.master = master
@@ -38,6 +41,8 @@ class Client:
         self.teardownAcked = 0
         self.connectToServer()
         self.frameNbr = 0
+        self.pauseTime = 0
+        self.beginPauseTime = 0
 
     # python Server.py 3000
     # python ClientLauncher.py localhost 3000 101 movie.Mjpeg
@@ -88,7 +93,7 @@ class Client:
         print("\npacket loss amount: " + str(self.lostFrameCounter) + "\n")
         print("\nframe amount: " + str(self.frameNbr) + "\n")
         print('\nPackage loss rate:\n' + str(rate))
-        videoDuration = self.endTimestamp - self.beginTimestamp  # in second
+        videoDuration = self.endTimestamp - self.beginTimestamp - self.pauseTime # in second
         videoRate = float(self.videoSize) / float(videoDuration)
         print('\nvideoDuration:\n' + str(videoDuration) + ' s')
         print('\nvideoLength:\n' + str(self.videoSize) + ' byte')
@@ -99,11 +104,16 @@ class Client:
     def pauseMovie(self):
         """Pause button handler."""
         if self.state == self.PLAYING:
+            if self.beginPauseTime == 0:
+                self.beginPauseTime = int(time())
             self.sendRtspRequest(self.PAUSE)
 
     def playMovie(self):
         """Play button handler."""
         if self.state == self.READY:
+            if self.beginPauseTime != 0:
+                self.pauseTime += int(time())- self.beginPauseTime
+                self.beginPauseTime = 0
             # Create a new thread to listen to RTP packets
             threading.Thread(target=self.listenRtp).start()
             self.playEvent = threading.Event()
